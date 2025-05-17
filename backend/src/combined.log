@@ -318,3 +318,6 @@
 {"level":"info","message":"MongoDB connected successfully","service":"identity-service","timestamp":"2025-04-21T13:26:06.458Z"}
 {"level":"info","message":"servering is runnig on this 4000","service":"identity-service","timestamp":"2025-04-21T13:39:54.462Z"}
 {"level":"info","message":"MongoDB connected successfully","service":"identity-service","timestamp":"2025-04-21T13:39:54.494Z"}
+{"level":"info","message":"servering is runnig on this 4000","service":"identity-service","timestamp":"2025-05-14T10:46:09.854Z"}
+{"level":"info","message":"MongoDB connected successfully","service":"identity-service","timestamp":"2025-05-14T10:46:09.933Z"}
+{"level":"info","message":"Server is running on port 4000","service":"identity-service","timestamp":"2025-05-14T10:46:20.989Z"}
