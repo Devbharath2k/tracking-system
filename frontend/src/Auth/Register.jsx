@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import Layouts from "../components/layouts.jsx";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import Layouts from "../components/layouts";
+import Login from '../Auth/Login.jsx'
+import axiosInstance from "../utils/axiosintance";
+import { APIpaths } from "../utils/apiPath";
 
 // Default emoji image';
 
@@ -40,26 +42,35 @@ function Register() {
     }
   };
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors(null);
 
-    try {
-      const response = await axios.post("/api/register", values); // Adjust API route
+    if (!values.email || !values.password ||!values.fname || !values.lname || !values.role) {
+      return setErrors("Both fields are required.");
+    }
 
-      if (response.status === 200 || response.status === 201) {
-        navigate("/login");
-      } else {
-        setErrors("Registration failed. Please try again.");
-      }
+    const { fname,lname, email,  password, role } = values;
+
+    try {
+      const response = await axiosInstance.post(APIpaths.AUTH.REGISTER, {
+        fname,
+        lname,
+        email,
+        password,
+        role,
+      });
+      console.log(response.data);
+      navigate("/login");
     } catch (error) {
-      if (error.response && error.response.data) {
-        setErrors(error.response.data.message || "Server error occurred.");
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
       } else {
-        setErrors("Something went wrong. Please try again later.");
+        setError("Something went wrong. Please try again later.");
       }
     }
   };
+
 
   return (
     <div>
@@ -189,7 +200,7 @@ function Register() {
                 >
                   <option value="">Select a role</option>
                   <option value="user">User</option>
-                  <option value="recruiter">Recruiter</option>
+                  <option value="admin">Admin</option>
                 </select>
               </div>
             </div>
@@ -201,10 +212,10 @@ function Register() {
               Register
             </button>
 
-            <p className="text-sm mt-4 text-slate-700">
+            <p className="text-sm mt-5 pt-3 text-slate-700 ">
               Already have an account?{" "}
               <span className="text-violet-600 font-semibold hover:underline cursor-pointer pt-10">
-                <a href="/login">Login</a>
+                <Link to="/login">Login</Link>
               </span>
             </p>
           </form>
