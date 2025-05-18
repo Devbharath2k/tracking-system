@@ -1,2 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
+
+@layer base {
+    * {
+        --font-display: "Poppins", sans-serif;
+        --breakpoint-3xl: 1920px;
+        --color-primary: #875cf5;
+    }
+
+    html {
+        font-family: var(--font-display);
+    }
+
+    body {
+        background: #fcfbfc;
+        overflow-x: hidden;
+    }
+}
