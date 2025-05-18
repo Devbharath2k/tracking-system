@@ -1,29 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layouts from "../components/layouts";
 import Home from "../pages/Dashboard/Home";
 import axiosInstance from "../utils/axiosintance";
 import { APIpaths } from "../utils/apiPath";
+import { UserContext } from "../context/usecontext";
 
 function Login() {
   const [values, setValues] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const {updateUser} = useContext(UserContext)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  
+   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
-    if (!values.email || !values.password) {
-      return setError("Both fields are required.");
-    }
-
     const { email, password, role } = values;
+
+    if (!email || !password || !role) {
+      return setError("All fields are required.");
+    }
 
     try {
       const response = await axiosInstance.post(APIpaths.AUTH.LOGIN, {
@@ -31,18 +34,19 @@ function Login() {
         password,
         role,
       });
-      console.log(response.data);
-      const { token, user } = response.data.accesstoken;
 
-      if (token) {
-        localStorage.setItem("accesstoken", token);
+      const { accesstoken, user } = response.data;
+
+      if (accesstoken) {
+        localStorage.setItem("accesstoken", accesstoken);
+        updateUser(user);
+        navigate("/dashboard");
       }
-      navigate("/dashboard");
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response?.data?.message) {
         setError(error.response.data.message);
       } else {
-        setError("Something went wrong. Please try again later.");
+        setError("Something went wrong. Please try again.");
       }
     }
   };

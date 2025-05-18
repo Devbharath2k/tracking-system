@@ -285,7 +285,33 @@ const Userprofiler = {
             logger.error("Error in logout", error);
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message: "Internal server error"});
         }
+    },
+    getUserinfo: async (req, res) => {
+  try {
+    const userId = req.user;
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      logger.warn(`User not found for ID: ${userId}`);
+      return res.status(StatusCodes.NOT_FOUND).json({
+        message: "User not found",
+        success: false,
+      });
     }
+
+    logger.info(`Successfully fetched user info for ID: ${userId}`);
+    return res.status(StatusCodes.OK).json({
+      message: "User info retrieved successfully",
+      data: user,
+    });
+  } catch (error) {
+    logger.error("Error in getUserinfo", error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "Internal server error",
+    });
+  }
+}
+
 }
 
 export default Userprofiler;

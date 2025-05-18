@@ -6,22 +6,20 @@ const axiosInstance = axios.create({
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
-    Accept: "application/json"
-  }
+    Accept: "application/json",
+  },
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const accesstoken = localStorage.getItem('accesstoken');
-    if (accesstoken) {
-      config.headers.Authorization = `Bearer ${accesstoken}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accesstoken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  return config;
+});
+(error) => {
+  return Promise.reject(error);
+};
 
 // Optional: Add a response interceptor
 axiosInstance.interceptors.response.use(
@@ -37,4 +35,3 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
- 

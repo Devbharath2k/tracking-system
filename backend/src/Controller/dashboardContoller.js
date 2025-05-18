@@ -7,9 +7,9 @@ const Dashboard = {
     try {
       const userId = req.user;
 
-      if (!isValidObjectId(userId)) {
-        return res.status(400).json({ message: "Invalid user ID" });
-      }
+      // if (!isValidObjectId(userId)) {
+      //   return res.status(400).json({ message: "Invalid user ID" });
+      // }
 
       const userObjectId = new Types.ObjectId(userId);
 

@@ -14,6 +14,7 @@ router.post('/api/forgotpassword', Userprofiler.forgotpassword);
 router.post('/api/verfiypassword', Userprofiler.verfiypassword);
 router.post('/api/resetpassword', Userprofiler.resetpassword);
 router.post('/api/logout', Authorization, Userprofiler.logout);
+router.get('/api/getuser', Authorization, Userprofiler.getUserinfo);
 
 router.post('/api/createIncome', Authorization, incomeController.addIncome);
 router.get('/api/allincome', Authorization, incomeController.allIncome);
@@ -26,7 +27,7 @@ router.delete('/api/deleteExpense/:id', Authorization, ExpenseController.deleteE
 router.get('/api/downloadExpense', Authorization, ExpenseController.downloadExcelSheet);
 
 //dashboard transcration: )
-router.get('/api/dashboard', Authorization,Dashboard.createDashboard )
+router.get('/api/dashboard',Dashboard.createDashboard )
 
 
 export default router;

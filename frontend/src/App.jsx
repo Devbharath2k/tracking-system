@@ -11,22 +11,26 @@ import Home from "./pages/Dashboard/Home.jsx";
 import Expense from "./pages/Dashboard/Expense.jsx";
 import Income from "./pages/Dashboard/Income.jsx";
 import Layouts from "./components/layouts.jsx";
+import UserProvider from './context/usecontext'; // extension not needed
+
 
 function App() {
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Root />} />
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/signUp" exact element={<Register />} />
-          <Route path="/dashboard" exact element={<Home />} />
-          <Route path="/home" exact element={<Home />} />
-          <Route path="/expense" exact element={<Expense />} />
-          <Route path="/income" exact element={<Income />} />
-          <Route path="/lagout" element={<Layouts/>} />
-        </Routes>
-      </Router>
+      <UserProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />} />
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/signUp" exact element={<Register />} />
+            <Route path="/dashboard" exact element={<Home />} />
+            <Route path="/home" exact element={<Home />} />
+            <Route path="/expense" exact element={<Expense />} />
+            <Route path="/income" exact element={<Income />} />
+            <Route path="/lagout" element={<Layouts />} />
+          </Routes>
+        </Router>
+      </UserProvider>
     </div>
   );
 }
